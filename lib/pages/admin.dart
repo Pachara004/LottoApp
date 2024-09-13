@@ -214,7 +214,7 @@ class _AdminpageState extends State<Adminpage> {
                               itemBuilder: (context, index) {
                                 // Calculate prize based on index (starting at 500,000 and halving for each subsequent prize)
                                 double prizeAmount =
-                                    500000 / (1 << index); // 500,000 / 2^index
+                                    10000 / (1 << index); // 500,000 / 2^index
                                 return ListTile(
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 12, horizontal: 16),
