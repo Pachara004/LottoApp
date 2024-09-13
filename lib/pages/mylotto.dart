@@ -213,7 +213,7 @@ class _MylottoState extends State<Mylotto> {
     );
   }
 
-  Widget buildLottoList() {
+  Widget buildLottoList() { 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       itemCount: lottoGetResUser.length,
@@ -298,7 +298,7 @@ class _MylottoState extends State<Mylotto> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(bottom: 10, left: 5),
+                          padding: const EdgeInsets.only(top:10,left: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: List.generate(
