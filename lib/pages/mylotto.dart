@@ -230,20 +230,20 @@ class _MylottoState extends State<Mylotto> {
         if (lotto.accepted == null) {
           prizeText = 'รอประกาศผล'; // No prize text if prize is 0
         } else if (lotto.prize == '1') {
-          prizeText = 'รางวัลที่ 1 เงินรางวัล 500000 บาท';
-          money = 500000;
+          prizeText = 'รางวัลที่ 1 เงินรางวัล 10000 บาท';
+          money = 10000;
         } else if (lotto.prize == '2') {
-          prizeText = 'รางวัลที่ 2 เงินรางวัล 250000 บาท';
-          money = 250000;
+          prizeText = 'รางวัลที่ 2 เงินรางวัล 5000 บาท';
+          money = 5000;
         } else if (lotto.prize == '3') {
-          prizeText = 'รางวัลที่ 3 เงินรางวัล 125000 บาท';
-          money = 125000;
+          prizeText = 'รางวัลที่ 3 เงินรางวัล 2500 บาท';
+          money = 2500;
         } else if (lotto.prize == '4') {
-          prizeText = 'รางวัลที่ 4 เงินรางวัล 62500 บาท';
-          money = 62500;
+          prizeText = 'รางวัลที่ 4 เงินรางวัล 1250 บาท';
+          money = 1250;
         } else if (lotto.prize == '5') {
-          prizeText = 'รางวัลที่ 5 เงินรางวัล 31250 บาท';
-          money = 31250;
+          prizeText = 'รางวัลที่ 5 เงินรางวัล 625 บาท';
+          money = 625;
         } else {
           prizeText = 'ไม่ถูกรางวัล';
         }
@@ -302,9 +302,10 @@ class _MylottoState extends State<Mylotto> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 5),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(bottom: 10, left: 5),
+                          padding: const EdgeInsets.only(bottom: 0, left: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: List.generate(
@@ -312,9 +313,10 @@ class _MylottoState extends State<Mylotto> {
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 3.0),
+                              
                                 child: Container(
-                                  height: 38,
-                                  width: 38,
+                                  height: 33,
+                                  width: 33,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
@@ -355,7 +357,7 @@ class _MylottoState extends State<Mylotto> {
                 if (lotto.prize !=
                     '0') // Show "ตรวจสอบ" button only if prize is not '0'
                   Positioned(
-                    bottom: 28,
+                    bottom: 37,
                     right: 10,
                     child: ElevatedButton(
                       onPressed: () async {
@@ -406,7 +408,7 @@ class _MylottoState extends State<Mylotto> {
                         backgroundColor: const Color(0xFF453BC9),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 6.0),
-                        minimumSize: const Size(100, 40),
+                        minimumSize: const Size(60, 30),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),

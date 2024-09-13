@@ -256,6 +256,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
+
     final String apiUrl = 'https://nodejs-wfjd.onrender.com/signup';
     final response = await http.post(
       Uri.parse(apiUrl),

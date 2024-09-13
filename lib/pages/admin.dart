@@ -97,7 +97,7 @@ class _AdminpageState extends State<Adminpage> {
                                       Expanded(
                                         child: _buildStatBox(
                                           'สลากถูกซื้อไปแล้ว',
-                                          ':\t${lenlotto.lenuser.toString()}', // แสดงผลจำนวนสลากที่ถูกซื้อ
+                                          '\t${lenlotto.lenuser.toString()}', // แสดงผลจำนวนสลากที่ถูกซื้อ
                                         ),
                                       ),
                                       const SizedBox(
@@ -105,7 +105,7 @@ class _AdminpageState extends State<Adminpage> {
                                       Expanded(
                                         child: _buildStatBox(
                                           'สลากทั้งหมด',
-                                          ':\t${lenlotto.lenall.toString()}', // แสดงผลจำนวนสลากทั้งหมด
+                                          '\t${lenlotto.lenall.toString()}', // แสดงผลจำนวนสลากทั้งหมด
                                         ),
                                       ),
                                     ],
@@ -351,12 +351,12 @@ Widget _buildStatBox(String title, String value) {
       ],
     ),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           title,
           style: const TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           ),
