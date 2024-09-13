@@ -31,21 +31,21 @@ class _MylottoState extends State<Mylotto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Container(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            decoration: BoxDecoration(
-              color: Colors.white, // สีพื้นหลัง
-              borderRadius: BorderRadius.circular(10), // มุมโค้ง
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2), // เงา
-                  spreadRadius: 2,
-                  blurRadius: 4,
-                  offset: Offset(0, 2), // เงา
-                ),
-              ],
-            ),
-            child: FutureBuilder<Map<String, dynamic>>(
+        title: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: FutureBuilder<Map<String, dynamic>>(
             future: fetchUserProfile(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -54,15 +54,13 @@ class _MylottoState extends State<Mylotto> {
                     'Loading...',
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
-                      fontSize: 22, // Increased font size for better visibility
-                      color: Color.fromARGB(255, 0, 0, 0), // Changed text color to blue
-                      letterSpacing:
-                          1.2, // Added letter spacing for a cleaner look
+                      fontSize: 22,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      letterSpacing: 1.2,
                       shadows: [
                         Shadow(
-                          offset: Offset(1, 1), // Shadow offset
-                          // color: Colors.black.withOpacity(0.5), // Shadow color
-                          blurRadius: 2, // Shadow blur radius
+                          offset: Offset(1, 1),
+                          blurRadius: 2,
                         ),
                       ],
                     ),
@@ -74,15 +72,13 @@ class _MylottoState extends State<Mylotto> {
                     'Error',
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
-                      fontSize: 22, // Increased font size for better visibility
-                      color: Color.fromARGB(255, 0, 0, 0), // Changed text color to blue
-                      letterSpacing:
-                          1.2, // Added letter spacing for a cleaner look
+                      fontSize: 22,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      letterSpacing: 1.2,
                       shadows: [
                         Shadow(
-                          offset: Offset(1, 1), // Shadow offset
-                          // color: Colors.black.withOpacity(0.5), // Shadow color
-                          blurRadius: 2, // Shadow blur radius
+                          offset: Offset(1, 1),
+                          blurRadius: 2,
                         ),
                       ],
                     ),
@@ -95,16 +91,13 @@ class _MylottoState extends State<Mylotto> {
                     'Balance : ${user['balance'] ?? 'Unknown'} ฿',
                     style: const TextStyle(
                       fontWeight: FontWeight.w900,
-                      fontSize: 22, // Increased font size for better visibility
-                      color: Color.fromARGB(
-                          255, 47, 188, 64), // Changed text color to blue
-                      letterSpacing:
-                          1.2, // Added letter spacing for a cleaner look
+                      fontSize: 22,
+                      color: Color.fromARGB(255, 47, 188, 64),
+                      letterSpacing: 1.2,
                       shadows: [
                         Shadow(
-                          offset: Offset(1, 1), // Shadow offset
-                          // color: Colors.black.withOpacity(0.5), // Shadow color
-                          blurRadius: 2, // Shadow blur radius
+                          offset: Offset(1, 1),
+                          blurRadius: 2,
                         ),
                       ],
                     ),
@@ -123,26 +116,58 @@ class _MylottoState extends State<Mylotto> {
               }
             },
           ),
-          ),
-          backgroundColor: const Color(0xFF453BC9),
-          automaticallyImplyLeading: false,
         ),
-      body: isLoading
-      
-          ? const Center(child: CircularProgressIndicator())
-          : lottoGetResUser.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No lottery tickets purchased',
-                    style: TextStyle(
-                      color: Color(0xFF453BC9),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              : buildLottoList(),
-              bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xFF453BC9),
+        automaticallyImplyLeading: false,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : lottoGetResUser.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'No lottery tickets purchased',
+                          style: TextStyle(
+                            color: Color(0xFF453BC9),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    : buildLottoList(),
+          ),
+          // ปุ่ม "Refresh" ที่อยู่ด้านล่างสุด
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  fetchLottoData();
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF453BC9),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              child: const Text(
+                'Refresh',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -194,6 +219,29 @@ class _MylottoState extends State<Mylotto> {
       itemCount: lottoGetResUser.length,
       itemBuilder: (context, index) {
         var lotto = lottoGetResUser[index];
+        String prizeText = '';
+        int money = 0;
+        if (lotto.accepted == null) {
+          prizeText = 'รอประกาศผล'; // No prize text if prize is 0
+        } else if (lotto.prize == '1') {
+          prizeText = 'รางวัลที่ 1 เงินรางวัล 500000 บาท';
+          money = 500000;
+        } else if (lotto.prize == '2') {
+          prizeText = 'รางวัลที่ 2 เงินรางวัล 250000 บาท';
+          money = 250000;
+        } else if (lotto.prize == '3') {
+          prizeText = 'รางวัลที่ 3 เงินรางวัล 125000 บาท';
+          money = 125000;
+        } else if (lotto.prize == '4') {
+          prizeText = 'รางวัลที่ 4 เงินรางวัล 62500 บาท';
+          money = 62500;
+        } else if (lotto.prize == '5') {
+          prizeText = 'รางวัลที่ 5 เงินรางวัล 31250 บาท';
+          money = 31250;
+        } else {
+          prizeText = 'ไม่ถูกรางวัล';
+        }
+
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: SizedBox(
@@ -284,84 +332,88 @@ class _MylottoState extends State<Mylotto> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          prizeText,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                Positioned(
-                  bottom: 80,
-                  right: 10,
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: Text(
-                      '${lotto.price} Baht',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 28,
-                  right: 10,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        var response = await http.put(
-                          Uri.parse('https://nodejs-wfjd.onrender.com/lotto/prize'),
-                          headers: <String, String>{
-                            'Content-Type': 'application/json; charset=UTF-8',
-                          },
-                          body: jsonEncode(<String, dynamic>{
-                            'lid': lotto.lottery_id,
-                            'uid': widget.uid,
-                            'money': lotto.prize,
-                          }),
-                        );
-                        if (response.statusCode == 200) {
-                          print('Lotto checked successfully for ID: ${lotto.lottery_id}');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Lotto checked successfully!'),
-                            ),
+                if (lotto.prize !=
+                    '0') // Show "ตรวจสอบ" button only if prize is not '0'
+                  Positioned(
+                    bottom: 28,
+                    right: 10,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          var response = await http.put(
+                            Uri.parse(
+                                'https://nodejs-wfjd.onrender.com/lotto/prize'),
+                            headers: <String, String>{
+                              'Content-Type': 'application/json; charset=UTF-8',
+                            },
+                            body: jsonEncode(<String, dynamic>{
+                              'lid': lotto.lottery_id,
+                              'uid': widget.uid,
+                              'money': money,
+                            }),
                           );
-                        } else {
-                          print('Failed to check lotto for ID: ${lotto.lottery_id}');
+                          if (response.statusCode == 200) {
+                            setState(() {
+                              lottoGetResUser
+                                  .removeWhere((item) => item.lottery_id == lotto.lottery_id);
+
+                              fetchLottoData();
+                            });
+                            print(
+                                'Lotto checked successfully for ID: ${lotto.lottery_id}');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('ขึ้นเงินสำเร็จ!'),
+                              ),
+                            );
+                          } else {
+                            print(
+                                'Failed to check lotto for ID: ${lotto.lottery_id}');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Failed to check lotto.'),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          print('Error: $e');
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Failed to check lotto.'),
-                            ),
+                            SnackBar(content: Text('Error: $e')),
                           );
                         }
-                      } catch (e) {
-                        print('Error: $e');
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF453BC9),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 6.0),
-                      minimumSize: const Size(69, 30),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF453BC9),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 6.0),
+                        minimumSize: const Size(100, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      'Check',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
+                      child: const Text(
+                        'ขึ้นเงิน',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
@@ -369,6 +421,7 @@ class _MylottoState extends State<Mylotto> {
       },
     );
   }
+
   Future<void> fetchLottoData() async {
     setState(() {
       isLoading = true;
@@ -397,6 +450,7 @@ class _MylottoState extends State<Mylotto> {
       );
     }
   }
+
   Future<Map<String, dynamic>> fetchUserProfile() async {
     final response = await http.get(
       Uri.parse('https://nodejs-wfjd.onrender.com/users/${widget.uid}'),
