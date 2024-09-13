@@ -314,8 +314,8 @@ class _HomePage extends State<HomePage> {
                                                           .symmetric(
                                                           horizontal: 3.0),
                                                       child: Container(
-                                                        height: 38,
-                                                        width: 38,
+                                                        height: 32,
+                                                        width: 32,
                                                         decoration:
                                                             BoxDecoration(
                                                           borderRadius:

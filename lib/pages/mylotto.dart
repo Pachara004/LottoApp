@@ -17,6 +17,7 @@ class Mylotto extends StatefulWidget {
 }
 
 class _MylottoState extends State<Mylotto> {
+  int _selectedIndex = 2;
   List<UserIdxRes> usergetRes = [];
   List<LottoGetRes> lottoGetResUser = [];
   bool isLoading = true;
@@ -167,8 +168,9 @@ class _MylottoState extends State<Mylotto> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+     bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -187,20 +189,24 @@ class _MylottoState extends State<Mylotto> {
         unselectedItemColor: Colors.grey,
         backgroundColor: Colors.white,
         onTap: (int index) {
-          if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProfilePage(
-                  uid: widget.uid,
-                ),
-              ),
-            );
-          } else if (index == 0) {
+          setState(() {
+            _selectedIndex = index; // อัพเดทสถานะของ tab ที่เลือก
+          });
+
+          if (index == 0) {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => HomePage(
+                  uid: widget.uid,
+                ),
+              ),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProfilePage(
                   uid: widget.uid,
                 ),
               ),
@@ -213,7 +219,7 @@ class _MylottoState extends State<Mylotto> {
     );
   }
 
-  Widget buildLottoList() { 
+  Widget buildLottoList() {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       itemCount: lottoGetResUser.length,
@@ -298,7 +304,7 @@ class _MylottoState extends State<Mylotto> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(top:10,left: 5),
+                          padding: const EdgeInsets.only(bottom: 10, left: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: List.generate(

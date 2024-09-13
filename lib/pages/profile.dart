@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/pages/first.dart';
@@ -7,6 +8,7 @@ import 'package:lotto_app/pages/home.dart';
 import 'package:lotto_app/pages/mylotto.dart';
 
 class ProfilePage extends StatefulWidget {
+  
   int uid = 0;
   ProfilePage({super.key, required this.uid});
 
@@ -15,6 +17,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  int _selectedIndex = 1;
   late Future<Map<String, dynamic>> _userProfile;
 
   @override
@@ -369,48 +372,62 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+  type: BottomNavigationBarType.fixed,
+  currentIndex: _selectedIndex, // กำหนด currentIndex ให้ตรงกับ tab ที่ถูกเลือก
+  items: const <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.person),
+      label: 'Profile',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.shopping_bag),
+      label: 'My Lotto',
+    ),
+  ],
+  selectedItemColor: const Color(0xFF453BC9),
+  unselectedItemColor: Colors.grey,
+  backgroundColor: Colors.white,
+  onTap: (int index) {
+    setState(() {
+      _selectedIndex = index; // อัพเดทสถานะของ tab ที่เลือก
+    });
+
+    if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(
+            uid: widget.uid,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+        ),
+      );
+    } else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(
+            uid: widget.uid,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
-            label: 'My Lotto',
+        ),
+      );
+    } else if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Mylotto(
+            uid: widget.uid,
           ),
-        ],
-        selectedItemColor: const Color(0xFF453BC9),
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.white,
-        onTap: (int index) {
-          if (index == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomePage(
-                  uid: widget.uid,
-                ),
-              ),
-            );
-          } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Mylotto(
-                  uid: widget.uid,
-                ),
-              ),
-            );
-          } else {
-            print("Selected tab: $index");
-          }
-        },
-      ),
+        ),
+      );
+    } else {
+      print("Selected tab: $index");
+    }
+  },
+),
     );
   }
 
