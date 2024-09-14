@@ -871,7 +871,7 @@ class ResetButtonn extends StatelessWidget {
       return;
     }
 
-    if (amount < 6) {
+    if (amount < 100) {
       await _showErrorDialog(context, 'กรุณาใส่จำนวนที่มากกว่า 100');
       return;
     }
