@@ -287,7 +287,7 @@ class _HomePage extends State<HomePage> {
                                                       ),
                                                       const SizedBox(width: 6),
                                                       const Text(
-                                                        'lotto',
+                                                        'Lotto',
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 14,
@@ -502,11 +502,13 @@ class _HomePage extends State<HomePage> {
 
     var response = await http.get(Uri.parse('https://nodejs-wfjd.onrender.com/lotto/'));
     if (response.statusCode == 200) {
+      
       return lottoGetResFromJson(response.body);
     } else {
       throw Exception('Failed to load lotto data');
     }
   }
+
    Future<Map<String, dynamic>> fetchUserProfile() async {
     final response = await http.get(
       Uri.parse('https://nodejs-wfjd.onrender.com/users/${widget.uid}'),
@@ -514,6 +516,7 @@ class _HomePage extends State<HomePage> {
 
     if (response.statusCode == 200) {
       final List<dynamic> userList = json.decode(response.body);
+      
       if (userList.isNotEmpty) {
         return userList[0];
       } else {
@@ -525,6 +528,7 @@ class _HomePage extends State<HomePage> {
       throw Exception('Failed to load user profile');
     }
   }
+  
 //   Future<void> _searchLotto() async {
 //   final response = await http.post(
 //     Uri.parse('https://nodejs-wfjd.onrender.com/lotto/searchlotto'),

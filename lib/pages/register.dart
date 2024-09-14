@@ -16,7 +16,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _balanceController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -92,32 +93,58 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  TextField(
+                  // TextField(
+                  //   controller: _emailController,
+                  //   decoration: const InputDecoration(
+                  //     filled: true,
+                  //     fillColor: Colors.white, // สีพื้นหลังของช่องข้อความ
+                  //     labelText: 'Email',
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                  //     ),
+                  //     prefixIcon: Icon(Icons.email),
+                  //   ),
+                  // ),
+                  TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(
                       filled: true,
-                      fillColor: Colors.white, // สีพื้นหลังของช่องข้อความ
+                      fillColor: Colors.white,
                       labelText: 'Email',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(45.0)),
                       ),
                       prefixIcon: Icon(Icons.email),
                     ),
+                    autovalidateMode: AutovalidateMode
+                        .onUserInteraction, // ตรวจสอบเมื่อผู้ใช้เริ่มกรอก
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'กรุณากรอกอีเมล';
+                      }
+                      // ตรวจสอบรูปแบบอีเมล
+                      String pattern =
+                          r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
+                      RegExp regex = RegExp(pattern);
+                      if (!regex.hasMatch(value)) {
+                        return 'อีเมลไม่ถูกต้อง';
+                      }
+                      return null; // ไม่มีข้อผิดพลาด
+                    },
                   ),
                   const SizedBox(height: 16.0),
-                  TextField(
-                    controller: _balanceController,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white, // สีพื้นหลังของช่องข้อความ
-                      labelText: 'Add Your Money',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                      ),
-                      prefixIcon: Icon(Icons.attach_money),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
+                  // TextField(
+                  //   controller: _balanceController,
+                  //   decoration: const InputDecoration(
+                  //     filled: true,
+                  //     fillColor: Colors.white, // สีพื้นหลังของช่องข้อความ
+                  //     labelText: 'Add Your Money',
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                  //     ),
+                  //     prefixIcon: Icon(Icons.attach_money),
+                  //   ),
+                  // ),
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
@@ -160,13 +187,13 @@ class _RegisterPageState extends State<RegisterPage> {
                               _isAccepted = value ?? false;
                             });
                           },
-                         checkColor: Colors.black, // สีของเครื่องหมายติ๊ก
-                            fillColor: MaterialStateProperty.all<Color>(
-                                Colors.white), // สีพื้นหลัง
-                            side: MaterialStateBorderSide.resolveWith(
-                              (states) =>
-                                  const BorderSide(color: Colors.white), // สีของขอบ
-                            ),
+                          checkColor: Colors.black, // สีของเครื่องหมายติ๊ก
+                          fillColor: MaterialStateProperty.all<Color>(
+                              Colors.white), // สีพื้นหลัง
+                          side: MaterialStateBorderSide.resolveWith(
+                            (states) => const BorderSide(
+                                color: Colors.white), // สีของขอบ
+                          ),
                         ),
                       ),
                       const Expanded(
@@ -235,11 +262,12 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-    Future<void> _register() async {
+
+  Future<void> _register() async {
     if (_usernameController.text.isEmpty ||
         _phoneController.text.isEmpty ||
         _emailController.text.isEmpty ||
-        _balanceController.text.isEmpty ||
+        // _balanceController.text.isEmpty ||
         _passwordController.text.isEmpty ||
         _confirmPasswordController.text.isEmpty) {
       _showErrorDialog('Please fill out all the fields');
@@ -256,7 +284,6 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-
     final String apiUrl = 'https://nodejs-wfjd.onrender.com/signup';
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -267,7 +294,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'username': _usernameController.text,
         'phone': _phoneController.text,
         'email': _emailController.text,
-        'balance': _balanceController.text,
+        // 'balance': _balanceController.text,
         'password': _passwordController.text,
       }),
     );
@@ -282,10 +309,17 @@ class _RegisterPageState extends State<RegisterPage> {
       } else {
         _showErrorDialog(data['message'] ?? 'Registration failed');
       }
-    } else {
-      _showErrorDialog(
-          'Failed to connect to the server. Status code: ${response.statusCode}');
+    } else if (response.statusCode == 400 || response.statusCode == 401) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      if (data['message'] != null &&
+          data['message'].contains('email already exists')) {
+        _showErrorDialog('The email address is already registered');
+      } 
     }
+    // {
+    //   _showErrorDialog(
+    //       'Failed to connect to the server. Status code: ${response.statusCode}');
+    // }
   }
 
   void _showSuccessDialog(String message) {
@@ -330,5 +364,4 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
   }
-
 }
