@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:lotto_app/pages/first.dart';
-import 'package:lotto_app/pages/editprofile.dart';
-import 'package:lotto_app/pages/home.dart';
-import 'package:lotto_app/pages/mylotto.dart';
+import 'package:OctopusLotto/pages/first.dart';
+import 'package:OctopusLotto/pages/editprofile.dart';
+import 'package:OctopusLotto/pages/home.dart';
+import 'package:OctopusLotto/pages/mylotto.dart';
 
 class ProfilePage extends StatefulWidget {
   

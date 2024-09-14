@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:lotto_app/config/config.dart';
-import 'package:lotto_app/models/response/adminGetRes.dart';
-import 'package:lotto_app/models/response/lottoGetRes.dart';
+import 'package:OctopusLotto/config/config.dart';
+import 'package:OctopusLotto/models/response/adminGetRes.dart';
+import 'package:OctopusLotto/models/response/lottoGetRes.dart';
 
 class Adminpage extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_app/pages/login.dart';
-import 'package:lotto_app/pages/register.dart';
+import 'package:OctopusLotto/pages/login.dart';
+import 'package:OctopusLotto/pages/register.dart';
 
 class FirstPage extends StatelessWidget {
   @override

@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:lotto_app/config/config.dart';
-import 'package:lotto_app/models/request/user_login_post.dart';
-import 'package:lotto_app/models/response/userLoginPostRes.dart';
-import 'package:lotto_app/pages/admin.dart';
-import 'package:lotto_app/pages/home.dart';
-import 'package:lotto_app/pages/register.dart';
+import 'package:OctopusLotto/config/config.dart';
+import 'package:OctopusLotto/models/request/user_login_post.dart';
+import 'package:OctopusLotto/models/response/userLoginPostRes.dart';
+import 'package:OctopusLotto/pages/admin.dart';
+import 'package:OctopusLotto/pages/home.dart';
+import 'package:OctopusLotto/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

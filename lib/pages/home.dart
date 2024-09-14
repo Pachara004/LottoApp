@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:lotto_app/config/config.dart';
-import 'package:lotto_app/models/response/lottoGetRes.dart';
-import 'package:lotto_app/pages/mylotto.dart';
-import 'package:lotto_app/pages/profile.dart';
+import 'package:OctopusLotto/config/config.dart';
+import 'package:OctopusLotto/models/response/lottoGetRes.dart';
+import 'package:OctopusLotto/pages/mylotto.dart';
+import 'package:OctopusLotto/pages/profile.dart';
 import 'package:http/http.dart' as http;
 import 'package:pinput/pinput.dart';
 

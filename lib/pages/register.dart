@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:lotto_app/pages/login.dart';
+import 'package:OctopusLotto/pages/login.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
